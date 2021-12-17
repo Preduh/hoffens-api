@@ -10,7 +10,7 @@ class CreateUserController {
         if (result instanceof Error) {
             return response.status(400).json(result.message);
         }
-        delete result.password;
+        delete result.user.password;
         return response.status(201).json(result);
     }
 }
