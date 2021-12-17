@@ -10,8 +10,11 @@ const jsonwebtoken_1 = require("jsonwebtoken");
 const User_1 = require("../../entities/User");
 const Auth_1 = __importDefault(require("../../config/Auth"));
 class CreateUserService {
-    async execute({ username, email, password, }) {
+    async execute({ username, email, password, masterKey, }) {
         const userRepo = (0, typeorm_1.getRepository)(User_1.User);
+        if (masterKey !== "hoffens5") {
+            return new Error("Invalid master key.");
+        }
         const usernameAlreadyExists = await userRepo.findOne({ username });
         if (usernameAlreadyExists) {
             return new Error("This username already exists.");

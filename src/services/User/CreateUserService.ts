@@ -9,6 +9,7 @@ interface RequestDTO {
   username: string;
   email: string;
   password: string;
+  masterKey: string;
 }
 
 interface ResponseDTO {
@@ -21,8 +22,13 @@ export class CreateUserService {
     username,
     email,
     password,
+    masterKey,
   }: RequestDTO): Promise<ResponseDTO | Error> {
     const userRepo = getRepository(User);
+
+    if (masterKey !== "hoffens5") {
+      return new Error("Invalid master key.");
+    }
 
     const usernameAlreadyExists = await userRepo.findOne({ username });
 
