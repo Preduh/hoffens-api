@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CreateUsers1639757149309 = void 0;
+exports.CreateUsers1639783457530 = void 0;
 const typeorm_1 = require("typeorm");
-class CreateUsers1639757149309 {
+class CreateUsers1639783457530 {
     async up(queryRunner) {
         await queryRunner.createTable(new typeorm_1.Table({
             name: "users",
@@ -43,4 +43,4 @@ class CreateUsers1639757149309 {
         await queryRunner.dropTable("users");
     }
 }
-exports.CreateUsers1639757149309 = CreateUsers1639757149309;
+exports.CreateUsers1639783457530 = CreateUsers1639783457530;

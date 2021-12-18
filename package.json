@@ -7,7 +7,7 @@
     "start": "node build/server",
     "build": "tsc",
     "dev": "tsnd --transpile-only --ignore-watch node_modules src/server.ts",
-    "typeorm": "tsnd node_modules/typeorm/cli.js"
+    "typeorm": "tsnd ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.1",

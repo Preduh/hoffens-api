@@ -20,10 +20,12 @@ const config: any = {
     },
   },
   entities: [`${rootDir}/entities/*.${extesionFile}`],
-  migrations: [`${rootDir}/database/migrations/*.${extesionFile}`],
+  migrations: [
+    `${rootDir}/${process.env.TYPEORM_MIGRATIONS_DIR}/*.${extesionFile}`,
+  ],
   cli: {
-    migrationsDir: process.env.TYPEORM_MIGRATIONS_DIR,
-    entitiesDir: process.env.TYPEORM_ENTITIES_DIR,
+    migrationsDir: `${rootDir}/${process.env.TYPEORM_MIGRATIONS_DIR}`,
+    entitiesDir: `${rootDir}/entities`,
   },
 };
 

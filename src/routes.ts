@@ -4,6 +4,8 @@ import authMiddleware from "./middlewares/authMiddleware";
 import { CreateUserController } from "./controllers/User/CreateUserController";
 import { GetUserByIdController } from "./controllers/User/GetUserByIdController";
 import { CreateSessionController } from "./controllers/Session/CreateSessionController";
+import { CreateCharacterController } from "./controllers/Character/CreateCharacterController";
+import { GetAllCharactersOfUserController } from "./controllers/Character/GetAllCharactersOfUserController";
 
 const routes = Router();
 
@@ -17,5 +19,9 @@ routes.post("/user", new CreateUserController().handle);
 
 // Session
 routes.post("/session", new CreateSessionController().handle);
+
+// Character
+routes.post("/characters", new GetAllCharactersOfUserController().handle);
+routes.post("/character", new CreateCharacterController().handle);
 
 export default routes;
