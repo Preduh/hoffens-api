@@ -17,6 +17,6 @@ routes.post("/user", new CreateUserController_1.CreateUserController().handle);
 // Session
 routes.post("/session", new CreateSessionController_1.CreateSessionController().handle);
 // Character
-routes.post("/characters", new GetAllCharactersOfUserController_1.GetAllCharactersOfUserController().handle);
+routes.get("/characters", authMiddleware_1.default, new GetAllCharactersOfUserController_1.GetAllCharactersOfUserController().handle);
 routes.post("/character", new CreateCharacterController_1.CreateCharacterController().handle);
 exports.default = routes;

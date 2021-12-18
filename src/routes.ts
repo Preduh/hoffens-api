@@ -21,7 +21,11 @@ routes.post("/user", new CreateUserController().handle);
 routes.post("/session", new CreateSessionController().handle);
 
 // Character
-routes.post("/characters", new GetAllCharactersOfUserController().handle);
+routes.get(
+  "/characters",
+  authMiddleware,
+  new GetAllCharactersOfUserController().handle
+);
 routes.post("/character", new CreateCharacterController().handle);
 
 export default routes;

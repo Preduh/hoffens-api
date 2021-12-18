@@ -4,9 +4,9 @@ exports.GetAllCharactersOfUserController = void 0;
 const GetAllCharactersOfUserService_1 = require("../../services/Character/GetAllCharactersOfUserService");
 class GetAllCharactersOfUserController {
     async handle(request, response) {
-        const { user_id } = request.body;
+        const id = request.user.id;
         const service = new GetAllCharactersOfUserService_1.GetAllCharactersOfUserService();
-        const result = await service.execute(user_id);
+        const result = await service.execute(id);
         if (result instanceof Error) {
             return response.status(400).json(result.message);
         }
