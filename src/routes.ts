@@ -6,6 +6,7 @@ import { GetUserByIdController } from "./controllers/User/GetUserByIdController"
 import { CreateSessionController } from "./controllers/Session/CreateSessionController";
 import { CreateCharacterController } from "./controllers/Character/CreateCharacterController";
 import { GetAllCharactersOfUserController } from "./controllers/Character/GetAllCharactersOfUserController";
+import { GetCharacterController } from "./controllers/Character/GetCharacterController";
 
 const routes = Router();
 
@@ -27,5 +28,10 @@ routes.get(
   new GetAllCharactersOfUserController().handle
 );
 routes.post("/character", new CreateCharacterController().handle);
+routes.get(
+  "/character/:id",
+  authMiddleware,
+  new GetCharacterController().handle
+);
 
 export default routes;
