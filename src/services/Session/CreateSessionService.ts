@@ -4,6 +4,7 @@ import { sign } from "jsonwebtoken";
 
 import { User } from "../../entities/User";
 import AuthConfig from "../../config/Auth";
+import { Character } from "../../entities/Character";
 
 interface RequestDTO {
   email: string;
@@ -13,11 +14,13 @@ interface RequestDTO {
 interface ResponseDTO {
   user: User;
   token: string;
+  characters: Character[];
 }
 
 export class CreateSessionService {
   async execute({ email, password }: RequestDTO): Promise<ResponseDTO | Error> {
     const userRepo = getRepository(User);
+    const characterRepo = getRepository(Character);
 
     const user = await userRepo.findOne({ email });
 
@@ -38,6 +41,23 @@ export class CreateSessionService {
       subject: user.id,
     });
 
-    return { user, token };
+    const characters = await characterRepo.find({
+      where: { user_id: user.id },
+    });
+
+    for (const character of characters) {
+      delete character.user_id;
+      delete character.secret_identity;
+      delete character.gender;
+      delete character.age;
+      delete character.height;
+      delete character.weight;
+      delete character.eyes;
+      delete character.hair;
+      delete character.created_at;
+      delete character.updated_at;
+    }
+
+    return { user, characters, token };
   }
 }

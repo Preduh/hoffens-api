@@ -34,6 +34,22 @@ export class CreateCharacterService {
     base_of_operations,
     power_level,
   }: RequestDTO): Promise<Character | Error> {
+    if (
+      !hero ||
+      !identity ||
+      !gender ||
+      !age ||
+      !height ||
+      !weight ||
+      !eyes ||
+      !hair ||
+      !affiliate_group ||
+      !base_of_operations ||
+      !power_level
+    ) {
+      return new Error("Fill all fields");
+    }
+
     const characterRepo = getRepository(Character);
 
     const checkId = validate(user_id);

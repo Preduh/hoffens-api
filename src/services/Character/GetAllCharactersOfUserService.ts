@@ -12,8 +12,21 @@ export class GetAllCharactersOfUserService {
 
     const characterRepo = getRepository(Character);
 
-    const character = await characterRepo.find({ user_id });
+    const characters = await characterRepo.find({ user_id });
 
-    return character;
+    for (const character of characters) {
+      delete character.user_id;
+      delete character.secret_identity;
+      delete character.gender;
+      delete character.age;
+      delete character.height;
+      delete character.weight;
+      delete character.eyes;
+      delete character.hair;
+      delete character.created_at;
+      delete character.updated_at;
+    }
+
+    return characters;
   }
 }

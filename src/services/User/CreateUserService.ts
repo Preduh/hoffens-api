@@ -24,22 +24,26 @@ export class CreateUserService {
     password,
     masterKey,
   }: RequestDTO): Promise<ResponseDTO | Error> {
+    if (!username || !email || !password || !masterKey) {
+      return new Error("Fill all fields");
+    }
+
     const userRepo = getRepository(User);
 
     if (masterKey !== "hoffens5") {
-      return new Error("Invalid master key.");
+      return new Error("Invalid master key");
     }
 
     const usernameAlreadyExists = await userRepo.findOne({ username });
 
     if (usernameAlreadyExists) {
-      return new Error("This username already exists.");
+      return new Error("This username already exists");
     }
 
     const emailAlreadyExists = await userRepo.findOne({ email });
 
     if (emailAlreadyExists) {
-      return new Error("This email already exists.");
+      return new Error("This email already exists");
     }
 
     const hashedPassword = await hash(password, 8);
