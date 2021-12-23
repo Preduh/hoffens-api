@@ -7,6 +7,7 @@ import { CreateSessionController } from "./controllers/Session/CreateSessionCont
 import { CreateCharacterController } from "./controllers/Character/CreateCharacterController";
 import { GetAllCharactersOfUserController } from "./controllers/Character/GetAllCharactersOfUserController";
 import { GetCharacterController } from "./controllers/Character/GetCharacterController";
+import { GetAllUsersController } from "./controllers/User/GetAllUsersController";
 
 const routes = Router();
 
@@ -17,6 +18,7 @@ routes.post(
   new GetUserByIdController().handle
 );
 routes.post("/user", new CreateUserController().handle);
+routes.get("/users", new GetAllUsersController().handle);
 
 // Session
 routes.post("/session", new CreateSessionController().handle);
