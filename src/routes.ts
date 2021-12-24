@@ -1,6 +1,8 @@
 import { Router } from "express";
+import multer from "multer";
 
 import authMiddleware from "./middlewares/authMiddleware";
+import multerConfig from "./config/Multer";
 import { CreateUserController } from "./controllers/User/CreateUserController";
 import { GetUserByIdController } from "./controllers/User/GetUserByIdController";
 import { CreateSessionController } from "./controllers/Session/CreateSessionController";
@@ -17,7 +19,11 @@ routes.post(
   authMiddleware,
   new GetUserByIdController().handle
 );
-routes.post("/user", new CreateUserController().handle);
+routes.post(
+  "/user",
+  multer(multerConfig).single("file"),
+  new CreateUserController().handle
+);
 routes.get("/users", new GetAllUsersController().handle);
 
 // Session

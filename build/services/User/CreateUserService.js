@@ -10,21 +10,29 @@ const jsonwebtoken_1 = require("jsonwebtoken");
 const User_1 = require("../../entities/User");
 const Auth_1 = __importDefault(require("../../config/Auth"));
 class CreateUserService {
-    async execute({ username, email, password, masterKey, }) {
+    async execute({ username, email, password, masterKey, filename, }) {
+        if (!username || !email || !password || !masterKey) {
+            return new Error("Fill all fields");
+        }
         const userRepo = (0, typeorm_1.getRepository)(User_1.User);
         if (masterKey !== "hoffens5") {
-            return new Error("Invalid master key.");
+            return new Error("Invalid master key");
         }
         const usernameAlreadyExists = await userRepo.findOne({ username });
         if (usernameAlreadyExists) {
-            return new Error("This username already exists.");
+            return new Error("This username already exists");
         }
         const emailAlreadyExists = await userRepo.findOne({ email });
         if (emailAlreadyExists) {
-            return new Error("This email already exists.");
+            return new Error("This email already exists");
         }
         const hashedPassword = await (0, bcrypt_1.hash)(password, 8);
-        const user = userRepo.create({ username, email, password: hashedPassword });
+        const user = userRepo.create({
+            username,
+            email,
+            password: hashedPassword,
+            image_name: filename,
+        });
         const { secret, expiresIn } = Auth_1.default.jwt;
         const token = (0, jsonwebtoken_1.sign)({}, secret, {
             expiresIn,

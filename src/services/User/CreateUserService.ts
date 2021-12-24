@@ -10,6 +10,7 @@ interface RequestDTO {
   email: string;
   password: string;
   masterKey: string;
+  filename: string | null;
 }
 
 interface ResponseDTO {
@@ -23,6 +24,7 @@ export class CreateUserService {
     email,
     password,
     masterKey,
+    filename,
   }: RequestDTO): Promise<ResponseDTO | Error> {
     if (!username || !email || !password || !masterKey) {
       return new Error("Fill all fields");
@@ -48,7 +50,12 @@ export class CreateUserService {
 
     const hashedPassword = await hash(password, 8);
 
-    const user = userRepo.create({ username, email, password: hashedPassword });
+    const user = userRepo.create({
+      username,
+      email,
+      password: hashedPassword,
+      image_name: filename,
+    });
 
     const { secret, expiresIn } = AuthConfig.jwt;
 

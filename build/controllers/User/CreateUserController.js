@@ -5,12 +5,15 @@ const CreateUserService_1 = require("../../services/User/CreateUserService");
 class CreateUserController {
     async handle(request, response) {
         const { username, email, password, masterKey } = request.body;
+        let filename = null;
+        request.file ? ({ filename } = request.file) : (filename = null);
         const service = new CreateUserService_1.CreateUserService();
         const result = await service.execute({
             username,
             email,
             password,
             masterKey,
+            filename,
         });
         if (result instanceof Error) {
             return response.status(400).json(result.message);

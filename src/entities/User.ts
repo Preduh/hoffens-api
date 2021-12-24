@@ -21,6 +21,9 @@ export class User {
   @Column()
   password: string;
 
+  @Column()
+  image_name: string;
+
   @CreateDateColumn()
   created_at: Date;
 

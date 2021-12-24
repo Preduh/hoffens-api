@@ -6,6 +6,10 @@ export class CreateUserController {
   async handle(request: Request, response: Response) {
     const { username, email, password, masterKey } = request.body;
 
+    let filename = null;
+
+    request.file ? ({ filename } = request.file) : (filename = null);
+
     const service = new CreateUserService();
 
     const result = await service.execute({
@@ -13,6 +17,7 @@ export class CreateUserController {
       email,
       password,
       masterKey,
+      filename,
     });
 
     if (result instanceof Error) {

@@ -9,9 +9,11 @@ const bcrypt_1 = require("bcrypt");
 const jsonwebtoken_1 = require("jsonwebtoken");
 const User_1 = require("../../entities/User");
 const Auth_1 = __importDefault(require("../../config/Auth"));
+const Character_1 = require("../../entities/Character");
 class CreateSessionService {
     async execute({ email, password }) {
         const userRepo = (0, typeorm_1.getRepository)(User_1.User);
+        const characterRepo = (0, typeorm_1.getRepository)(Character_1.Character);
         const user = await userRepo.findOne({ email });
         if (!user) {
             return new Error("Email/Password is invalid.");
@@ -25,7 +27,17 @@ class CreateSessionService {
             expiresIn,
             subject: user.id,
         });
-        return { user, token };
+        const characters = await characterRepo.find({
+            where: { user_id: user.id },
+            select: [
+                "hero",
+                "identity",
+                "affiliate_group",
+                "base_of_operations",
+                "power_level",
+            ],
+        });
+        return { user, characters, token };
     }
 }
 exports.CreateSessionService = CreateSessionService;
