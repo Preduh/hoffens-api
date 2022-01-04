@@ -43,14 +43,18 @@ export class CreateSessionService {
 
     const characters = await characterRepo.find({
       where: { user_id: user.id },
-      select: [
-        "hero",
-        "identity",
-        "affiliate_group",
-        "base_of_operations",
-        "power_level",
-      ],
     });
+
+    for (const character of characters) {
+      delete character.user_id;
+      delete character.secret_identity;
+      delete character.gender;
+      delete character.age;
+      delete character.height;
+      delete character.weight;
+      delete character.eyes;
+      delete character.hair;
+    }
 
     return { user, characters, token };
   }
